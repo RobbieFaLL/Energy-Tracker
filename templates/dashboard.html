@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Energy Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% else %}
+        <h2>Energy Cost Over Time</h2>
+        <img src="data:image/png;base64,{{ chart }}" alt="Energy Chart">
+        <h3>Recent Readings</h3>
+        <ul>
+            {% for reading in readings %}
+            <li>{{ reading.date }}: {{ reading.kwh_used }} kWh 
+                (£{{ reading.kwh_used|floatformat:2 }} × £{{ tariff.price_per_kwh|floatformat:2|divisibleby:100 }} 
+                = £{{ reading.kwh_used|floatformat:2|tariff.price_per_kwh|divisibleby:100|floatformat:2 }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <br>
+    <a href="{% url 'input_data' %}">Add More Data</a>
+</body>
+</html>

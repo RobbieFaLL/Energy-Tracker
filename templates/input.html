@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Meter Data</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Meter Reading</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ meter_form.as_p }}
+            <h2>Enter Tariff</h2>
+            {{ tariff_form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        <a href="{% url 'dashboard' %}">View Dashboard</a>
+    </div>
+</body>
+</html>
