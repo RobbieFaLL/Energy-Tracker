@@ -1,1 +1,21 @@
-/env
+# Ignore Python virtual environments
+/env/
+
+# Ignore SQLite database
+/db.sqlite3
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+
+# Ignore Django migrations cache
+meter/migrations/__pycache__/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore OS files
+.DS_Store
+
+# Ignore logs
+*.log
