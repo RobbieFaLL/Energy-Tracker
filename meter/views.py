@@ -28,13 +28,23 @@ def input_data(request):
 def dashboard(request):
     readings = MeterReading.objects.all().order_by('date')
     tariff = Tariff.objects.last()
-    
+
     if not readings.exists() or not tariff:
         return render(request, 'dashboard.html', {'error': "No data available."})
 
     dates = [reading.date for reading in readings]
     kwh = [reading.kwh_used for reading in readings]
     costs = [reading.kwh_used * tariff.price_per_kwh for reading in readings]
+
+    # Attach cost to each reading for template usage
+    readings_with_cost = []
+    for reading in readings:
+        cost = reading.kwh_used * tariff.price_per_kwh
+        readings_with_cost.append({
+            'date': reading.date,
+            'kwh_used': reading.kwh_used,
+            'cost': cost
+        })
 
     # Matplotlib Plot
     plt.figure(figsize=(8, 5))
@@ -52,4 +62,4 @@ def dashboard(request):
     buf.close()
     plt.close()
 
-    return render(request, 'dashboard.html', {'chart': encoded, 'readings': readings, 'tariff': tariff})
+    return render(request, 'dashboard.html', {'chart': encoded, 'readings': readings_with_cost, 'tariff': tariff})

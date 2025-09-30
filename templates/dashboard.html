@@ -14,11 +14,10 @@
         <h3>Recent Readings</h3>
         <ul>
             {% for reading in readings %}
-            <li>{{ reading.date }}: {{ reading.kwh_used }} kWh 
-                (£{{ reading.kwh_used|floatformat:2 }} × £{{ tariff.price_per_kwh|floatformat:2|divisibleby:100 }} 
-                = £{{ reading.kwh_used|floatformat:2|tariff.price_per_kwh|divisibleby:100|floatformat:2 }})
+            <li>{{ reading.date }}: {{ reading.kwh_used|floatformat:2 }} kWh 
+                (£{{ reading.kwh_used|floatformat:2 }} × £{{ tariff.price_per_kwh|floatformat:2 }} = £{{ reading.cost|floatformat:2 }})
             </li>
-        {% endfor %}
+            {% endfor %}
         </ul>
     {% endif %}
     <br>
